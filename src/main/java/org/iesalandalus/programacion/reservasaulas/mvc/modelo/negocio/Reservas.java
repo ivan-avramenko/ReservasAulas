@@ -1,11 +1,13 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
+import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Permanencia;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Reserva;
 
@@ -18,7 +20,11 @@ public class Reservas {
 	}
 	
 	public List<Reserva> get() {
-		return copiaProfundaReservas();
+		List<Reserva> reservasOrdenadas = copiaProfundaReservas();
+		Comparator<Aula> comparadorAula = Comparator.comparing(Aula::getNombre);
+		Comparator<Permanencia> comparadorPermanencia = Comparator.comparing(Permanencia::getDia).thenComparing(Permanencia::getTramo);
+		reservasOrdenadas.sort(Comparator.comparing(Reserva::getAula, comparadorAula).thenComparing(Reserva::getPermanencia, comparadorPermanencia));
+		return reservasOrdenadas;
 	}
 	
 	private List<Reserva> copiaProfundaReservas() {
@@ -39,6 +45,9 @@ public class Reservas {
 				reservasProfesor.add(new Reserva(reserva));
 			}
 		}
+		Comparator<Aula> comparadorAula = Comparator.comparing(Aula::getNombre);
+		Comparator<Permanencia> comparadorPermanencia = Comparator.comparing(Permanencia::getDia).thenComparing(Permanencia::getTramo);
+		reservasProfesor.sort(Comparator.comparing(Reserva::getAula, comparadorAula).thenComparing(Reserva::getPermanencia, comparadorPermanencia));
 		return reservasProfesor;
 	}
 	
@@ -52,6 +61,8 @@ public class Reservas {
 				reservasAula.add(new Reserva(reserva));
 			}
 		}
+		Comparator<Permanencia> comparadorPermanencia = Comparator.comparing(Permanencia::getDia).thenComparing(Permanencia::getTramo);
+		reservasAula.sort(Comparator.comparing(Reserva::getPermanencia, comparadorPermanencia));
 		return reservasAula;
 	}
 	

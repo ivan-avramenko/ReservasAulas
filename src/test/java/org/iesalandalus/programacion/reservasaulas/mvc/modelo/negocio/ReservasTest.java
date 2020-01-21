@@ -52,6 +52,8 @@ public class ReservasTest {
 	private static Reserva reserva1;
 	private static Reserva reserva2;
 	private static Reserva reserva3;
+	private static Reserva reserva4;
+	private static Reserva reserva5;
 	private static Reserva reservaRepetida;
 	
 	@BeforeClass
@@ -65,43 +67,57 @@ public class ReservasTest {
 		permanencia1 = new Permanencia(LocalDate.now(), Tramo.MANANA);
 		permanencia2 = new Permanencia(LocalDate.now(), Tramo.TARDE);
 		permanencia3 = new Permanencia(LocalDate.now().plusDays(1), Tramo.MANANA);
-		reserva1 = new Reserva(profesor1, aula1, permanencia1);
-		reserva2 = new Reserva(profesor2, aula2, permanencia2);
+		reserva1 = new Reserva(profesor1, aula1, permanencia3);
+		reserva2 = new Reserva(profesor1, aula2, permanencia3);
 		reserva3 = new Reserva(profesor3, aula3, permanencia3);
-		reservaRepetida = new Reserva(profesor2, aula1, permanencia1);
+		reserva4 = new Reserva(profesor1, aula2, permanencia2);
+		reserva5 = new Reserva(profesor2, aula2, permanencia1);
+		reservaRepetida = new Reserva(profesor1, aula2, permanencia3);
 	}
 	
 	@Test
-	public void getDevuelveReservas() {
+	public void getDevuelveReservasOrdenadasPorAulaYPermanencia() {
 		Reservas reservas = new Reservas();
 		try {
 			reservas.insertar(reserva1);
 			reservas.insertar(reserva2);
 			reservas.insertar(reserva3);
+			reservas.insertar(reserva4);
+			reservas.insertar(reserva5);
 			List<Reserva> copiaReservas = reservas.get();
-			assertThat(TAMANO_NO_ESPERADO, copiaReservas.size(), is(3));
+			assertThat(TAMANO_NO_ESPERADO, copiaReservas.size(), is(5));
 			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(0), is(reserva1));
 			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(0), not(sameInstance(reserva1)));
-			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(1), is(reserva2));
-			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(1), not(sameInstance(reserva2)));
-			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(2), is(reserva3));
-			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(2), not(sameInstance(reserva3)));
+			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(1), is(reserva5));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(1), not(sameInstance(reserva5)));
+			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(2), is(reserva4));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(2), not(sameInstance(reserva4)));
+			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(3), is(reserva2));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(3), not(sameInstance(reserva2)));
+			assertThat(RESERVA_NO_ESPERADA, copiaReservas.get(4), is(reserva3));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaReservas.get(4), not(sameInstance(reserva3)));
 		} catch (OperationNotSupportedException e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
 	}
 	
 	@Test
-	public void getProfesorValidoDevuelveReservasProfesor() {
+	public void getProfesorValidoDevuelveReservasProfesorOrdenadasPorAulaYPermanencia() {
 		Reservas reservas = new Reservas();
 		try {
 			reservas.insertar(reserva1);
 			reservas.insertar(reserva2);
 			reservas.insertar(reserva3);
+			reservas.insertar(reserva4);
+			reservas.insertar(reserva5);
 			List<Reserva> reservasProfesor = reservas.get(profesor1);
 			assertThat(OPERACION_NO_REALIZADA, reservasProfesor.get(0), is(reserva1));
 			assertThat(REFERENCIA_NO_ESPERADA, reservasProfesor.get(0), not(sameInstance(reserva1)));
-			assertThat(TAMANO_NO_ESPERADO, reservasProfesor.size(), is(1));
+			assertThat(OPERACION_NO_REALIZADA, reservasProfesor.get(1), is(reserva4));
+			assertThat(REFERENCIA_NO_ESPERADA, reservasProfesor.get(1), not(sameInstance(reserva4)));
+			assertThat(OPERACION_NO_REALIZADA, reservasProfesor.get(2), is(reserva2));
+			assertThat(REFERENCIA_NO_ESPERADA, reservasProfesor.get(2), not(sameInstance(reserva2)));
+			assertThat(TAMANO_NO_ESPERADO, reservasProfesor.size(), is(3));
 		} catch (Exception e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
@@ -127,16 +143,22 @@ public class ReservasTest {
 	}
 	
 	@Test
-	public void getAulaValidaDevuelveReservasTutoria() {
+	public void getAulaValidaDevuelveReservasAulaOrdenadasPorPermanencia() {
 		Reservas reservas = new Reservas();
 		try {
 			reservas.insertar(reserva1);
 			reservas.insertar(reserva2);
 			reservas.insertar(reserva3);
-			List<Reserva> reservasAula = reservas.get(new Aula("Aula 1"));
-			assertThat(OPERACION_NO_REALIZADA, reservasAula.get(0), is(reserva1));
-			assertThat(REFERENCIA_NO_ESPERADA, reservasAula.get(0), not(sameInstance(reserva1)));
-			assertThat(TAMANO_NO_ESPERADO, reservasAula.size(), is(1));
+			reservas.insertar(reserva4);
+			reservas.insertar(reserva5);
+			List<Reserva> reservasAula = reservas.get(aula2);
+			assertThat(OPERACION_NO_REALIZADA, reservasAula.get(0), is(reserva5));
+			assertThat(REFERENCIA_NO_ESPERADA, reservasAula.get(0), not(sameInstance(reserva5)));
+			assertThat(OPERACION_NO_REALIZADA, reservasAula.get(1), is(reserva4));
+			assertThat(REFERENCIA_NO_ESPERADA, reservasAula.get(1), not(sameInstance(reserva4)));
+			assertThat(OPERACION_NO_REALIZADA, reservasAula.get(2), is(reserva2));
+			assertThat(REFERENCIA_NO_ESPERADA, reservasAula.get(2), not(sameInstance(reserva2)));
+			assertThat(TAMANO_NO_ESPERADO, reservasAula.size(), is(3));
 		} catch (Exception e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
