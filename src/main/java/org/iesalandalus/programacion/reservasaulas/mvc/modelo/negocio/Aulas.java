@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
@@ -16,7 +17,9 @@ public class Aulas {
 	}
 	
 	public List<Aula> get() {
-		return copiaProfundaAulas();
+		List<Aula> aulasOrdenadas = copiaProfundaAulas();
+		aulasOrdenadas.sort(Comparator.comparing(Aula::getNombre));
+		return aulasOrdenadas;
 	}
 	
 	private List<Aula> copiaProfundaAulas() {

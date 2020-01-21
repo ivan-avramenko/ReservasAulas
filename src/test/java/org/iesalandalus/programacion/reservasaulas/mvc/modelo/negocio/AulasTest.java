@@ -45,12 +45,12 @@ public class AulasTest {
 	}
 	
 	@Test
-	public void getDevuelveAulas() {
+	public void getDevuelveAulasOrdenadasPorNombre() {
 		Aulas aulas = new Aulas();
 		try {
-			aulas.insertar(aula1);
-			aulas.insertar(aula2);
 			aulas.insertar(aula3);
+			aulas.insertar(aula2);
+			aulas.insertar(aula1);
 			List<Aula> copiaAulas = aulas.get();
 			assertThat(TAMANO_NO_ESPERADO, copiaAulas.size(), is(3));
 			assertThat(AULA_NO_ESPERADA, copiaAulas.get(0), is(aula1));
