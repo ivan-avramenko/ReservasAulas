@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.vista;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.controlador.Controlador;
@@ -114,8 +116,8 @@ public class Vista {
 	
 	public void listarAulas() {
 		Consola.mostrarCabecera("Listado de Aulas");
-		Aula[] aulas = controlador.getAulas();
-		if (aulas[0] != null) {
+		List<Aula> aulas = controlador.getAulas();
+		if (!aulas.isEmpty()) {
 			for (Aula aula : aulas) {
 				if (aula != null) 
 					System.out.println(aula);

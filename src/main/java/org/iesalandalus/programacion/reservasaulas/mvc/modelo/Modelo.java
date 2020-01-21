@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.modelo;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
@@ -20,7 +22,7 @@ public class Modelo {
 	
 	public Modelo() {
 		profesores = new Profesores(CAPACIDAD);
-		aulas = new Aulas(CAPACIDAD);
+		aulas = new Aulas();
 		reservas = new Reservas(CAPACIDAD);
 	}
 	
@@ -75,7 +77,7 @@ public class Modelo {
 		return profesores.get();
 	}
 	
-	public Aula[] getAulas() {
+	public List<Aula> getAulas() {
 		return aulas.get();
 	}
 	

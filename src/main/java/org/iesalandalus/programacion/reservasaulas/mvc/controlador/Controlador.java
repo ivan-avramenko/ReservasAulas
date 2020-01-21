@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.controlador;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.Modelo;
@@ -73,7 +75,7 @@ public class Controlador {
 		return modelo.getProfesores();
 	}
 	
-	public Aula[] getAulas() {
+	public List<Aula> getAulas() {
 		return modelo.getAulas();
 	}
 	
