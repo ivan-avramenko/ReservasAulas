@@ -60,10 +60,18 @@ public class Modelo {
 	}
 	
 	public void borrar(Profesor profesor) throws OperationNotSupportedException {
+		List<Reserva> reservasProfesor = reservas.get(profesor);
+		for (Reserva reserva : reservasProfesor) {
+			reservas.borrar(reserva);
+		}
 		profesores.borrar(profesor);
 	}
 	
 	public void borrar(Aula aula) throws OperationNotSupportedException {
+		List<Reserva> reservasAula = reservas.get(aula);
+		for (Reserva reserva : reservasAula) {
+			reservas.borrar(reserva);
+		}
 		aulas.borrar(aula);
 	}
 	

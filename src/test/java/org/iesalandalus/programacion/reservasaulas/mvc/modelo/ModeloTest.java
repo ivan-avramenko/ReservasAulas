@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -52,7 +54,6 @@ public class ModeloTest {
 	
 	@BeforeClass
 	public static void asignarValoresAtributos() {
-		//MockitoAnnotations.initMocks(this);
 		profesorExistente = Profesor.getProfesorFicticio("bob@gmail.com");
 		profesorNoExistente = Profesor.getProfesorFicticio("patricio@gmail.com");
 		aulaExistente = new Aula("Aula 1");
@@ -78,13 +79,28 @@ public class ModeloTest {
 	}
 	
 	@Test
-	public void borrarProfesorLlamaProfesoresBorrar() {
+	public void borrarProfesorLlamaReservasGetProfesorReservasBorrarProfesoresBorrar() {
 		try {
+			List<Reserva> reservasProfesor = simularComportamientoBorrarProfesorConReservas();
 			modelo.borrar(profesorExistente);
+			InOrder orden = Mockito.inOrder(profesoresSimulados, reservasSimuladas);
+			orden.verify(reservasSimuladas).get(profesorExistente);
+			for (Reserva reserva : reservasProfesor) {
+				orden.verify(reservasSimuladas).borrar(reserva);
+			}
 			verify(profesoresSimulados).borrar(profesorExistente);
 		} catch (OperationNotSupportedException e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
+	}
+	
+	private List<Reserva> simularComportamientoBorrarProfesorConReservas() {
+		List<Reserva> reservasProfesor = new ArrayList<>();
+		reservasProfesor.add(Reserva.getReservaFicticia(new Aula("Aula 1"), new Permanencia(LocalDate.now(), Tramo.MANANA)));
+		reservasProfesor.add(Reserva.getReservaFicticia(new Aula("Aula 2"), new Permanencia(LocalDate.now(), Tramo.MANANA)));
+		reservasProfesor.add(Reserva.getReservaFicticia(new Aula("Aula 3"), new Permanencia(LocalDate.now(), Tramo.MANANA)));
+		when(reservasSimuladas.get(Profesor.getProfesorFicticio("bob@gmail.com"))).thenReturn(reservasProfesor);
+		return reservasProfesor;
 	}
 	
 	@Test
@@ -110,13 +126,29 @@ public class ModeloTest {
 	}
 	
 	@Test
-	public void borrarAulaLlamaAulasBorrar() {
+	public void borrarAulaLlamaReservasGetAulaReservasBorrarAulasBorrar() {
 		try {
+			List<Reserva> reservasAula = simularComportamientoBorrarAulaConReservas();
 			modelo.borrar(aulaExistente);
-			verify(aulasSimuladas).borrar(aulaExistente);
+			InOrder orden = Mockito.inOrder(aulasSimuladas, reservasSimuladas);
+			orden.verify(reservasSimuladas).get(aulaExistente);
+			for (Reserva reserva : reservasAula) {
+				orden.verify(reservasSimuladas).borrar(reserva);
+			}
+			orden.verify(aulasSimuladas).borrar(aulaExistente);
 		} catch (OperationNotSupportedException e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
+	}
+	
+	private List<Reserva> simularComportamientoBorrarAulaConReservas() {
+		List<Reserva> reservasAula = new ArrayList<>();
+		Aula aula1 = new Aula("Aula 1");
+		reservasAula.add(Reserva.getReservaFicticia(aula1, new Permanencia(LocalDate.now(), Tramo.MANANA)));
+		reservasAula.add(Reserva.getReservaFicticia(aula1, new Permanencia(LocalDate.now(), Tramo.TARDE)));
+		reservasAula.add(Reserva.getReservaFicticia(aula1, new Permanencia(LocalDate.now().plusDays(1), Tramo.MANANA)));
+		when(reservasSimuladas.get(aula1)).thenReturn(reservasAula);
+		return reservasAula;
 	}
 	
 	@Test
@@ -213,13 +245,13 @@ public class ModeloTest {
 	}
 	
 	@Test
-	public void getReservasProfesorLlamaReservasGetConParametroProfesor() {
+	public void getReservasProfesorLlamaReservasGetProfesor() {
 		modelo.getReservas(profesorExistente);
 		verify(reservasSimuladas).get(profesorExistente);
 	}
 	
 	@Test
-	public void getReservasAulaLlamaReservasGetConParametroAula() {
+	public void getReservasAulaLlamaReservasGetAula() {
 		modelo.getReservas(aulaExistente);
 		verify(reservasSimuladas).get(aulaExistente);
 	}
