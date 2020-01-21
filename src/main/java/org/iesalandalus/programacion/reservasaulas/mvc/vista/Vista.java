@@ -162,8 +162,8 @@ public class Vista {
 	
 	public void listarReservas() {
 		Consola.mostrarCabecera("Listado de Reservas");
-		Reserva[] reservas = controlador.getReservas();
-		if (reservas[0] != null) {
+		List<Reserva> reservas = controlador.getReservas();
+		if (!reservas.isEmpty()) {
 			for (Reserva reserva : reservas) {
 				if (reserva != null) 
 					System.out.println(reserva);
@@ -175,8 +175,8 @@ public class Vista {
 	
 	public void listarReservasProfesor() {
 		Consola.mostrarCabecera("Listado de Reservas por Profesor");
-		Reserva[] reservas = controlador.getReservas(Consola.leerProfesorFicticio());
-		if (reservas[0] != null) {
+		List<Reserva> reservas = controlador.getReservas(Consola.leerProfesorFicticio());
+		if (!reservas.isEmpty()) {
 			for (Reserva reserva : reservas) {
 				if (reserva != null) 
 					System.out.println(reserva);
@@ -188,8 +188,8 @@ public class Vista {
 	
 	public void listarReservasAula() {
 		Consola.mostrarCabecera("Listado de Reservas por Aula");
-		Reserva[] reservas = controlador.getReservas(Consola.leerAula());
-		if (reservas[0] != null) {
+		List<Reserva> reservas = controlador.getReservas(Consola.leerAula());
+		if (!reservas.isEmpty()) {
 			for (Reserva reserva : reservas) {
 				if (reserva != null) 
 					System.out.println(reserva);

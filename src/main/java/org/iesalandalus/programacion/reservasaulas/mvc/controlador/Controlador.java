@@ -79,15 +79,15 @@ public class Controlador {
 		return modelo.getAulas();
 	}
 	
-	public Reserva[] getReservas() {
+	public List<Reserva> getReservas() {
 		return modelo.getReservas();
 	}
 	
-	public Reserva[] getReservas(Profesor profesor) {
+	public List<Reserva> getReservas(Profesor profesor) {
 		return modelo.getReservas(profesor);
 	}
 	
-	public Reserva[] getReservas(Aula aula) {
+	public List<Reserva> getReservas(Aula aula) {
 		return modelo.getReservas(aula);
 	}
 
