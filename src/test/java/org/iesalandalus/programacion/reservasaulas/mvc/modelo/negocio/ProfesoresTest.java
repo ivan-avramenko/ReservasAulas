@@ -45,7 +45,7 @@ public class ProfesoresTest {
 	}
 	
 	@Test
-	public void getDevuelveProfesores() {
+	public void getDevuelveProfesoresOrdenadosPorCorreo() {
 		Profesores profesores = new Profesores();
 		try {
 			profesores.insertar(profesor1);
@@ -55,10 +55,10 @@ public class ProfesoresTest {
 			assertThat(TAMANO_NO_ESPERADO, copiaProfesores.size(), is(3));
 			assertThat(PROFESOR_NO_ESPERADO, copiaProfesores.get(0), is(profesor1));
 			assertThat(REFERENCIA_NO_ESPERADA, copiaProfesores.get(0), not(sameInstance(profesor1)));
-			assertThat(PROFESOR_NO_ESPERADO, copiaProfesores.get(1), is(profesor2));
-			assertThat(REFERENCIA_NO_ESPERADA, copiaProfesores.get(1), not(sameInstance(profesor2)));
-			assertThat(PROFESOR_NO_ESPERADO, copiaProfesores.get(2), is(profesor3));
-			assertThat(REFERENCIA_NO_ESPERADA, copiaProfesores.get(2), not(sameInstance(profesor3)));
+			assertThat(PROFESOR_NO_ESPERADO, copiaProfesores.get(1), is(profesor3));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaProfesores.get(1), not(sameInstance(profesor3)));
+			assertThat(PROFESOR_NO_ESPERADO, copiaProfesores.get(2), is(profesor2));
+			assertThat(REFERENCIA_NO_ESPERADA, copiaProfesores.get(2), not(sameInstance(profesor2)));
 		} catch (OperationNotSupportedException e) {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
