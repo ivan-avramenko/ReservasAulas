@@ -71,7 +71,7 @@ public class Controlador {
 		modelo.borrar(aula);
 	}
 	
-	public Profesor[] getProfesores() {
+	public List<Profesor> getProfesores() {
 		return modelo.getProfesores();
 	}
 	

@@ -21,7 +21,7 @@ public class Modelo {
 	private Reservas reservas;
 	
 	public Modelo() {
-		profesores = new Profesores(CAPACIDAD);
+		profesores = new Profesores();
 		aulas = new Aulas();
 		reservas = new Reservas(CAPACIDAD);
 	}
@@ -73,7 +73,7 @@ public class Modelo {
 		reservas.borrar(reserva);
 	}
 
-	public Profesor[] getProfesores() {
+	public List<Profesor> getProfesores() {
 		return profesores.get();
 	}
 	
