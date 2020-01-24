@@ -1,5 +1,5 @@
 # Ejemplo Tarea: Reservas de Aulas
-## Profesor: Andrés Rubio del Ríop
+## Profesor: Andrés Rubio del Río
 
 Desde el IES Al-Ándalus nos han encargado realizar una aplicación para la gestión de reservas de aulas del IES Al-Ándalus. Después de todas las especificaciones y requerimientos anotados, en este **primer spring** de la aplicación se ha decidido abarcar los siguientes:
 
